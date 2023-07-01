@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-//            $table->integer('teacher_id')->unsigned()->nullable();
-//            $table->foreign('teacher_id')->references('id')->on('teachers')->nullOnDelete();
+            $table->integer('teacher_id')->unsigned()->nullable();
+            $table->foreign('teacher_id')->references('id')->on('teachers')->nullOnDelete();
             $table->timestamps();
         });
     }
