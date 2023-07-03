@@ -1,4 +1,5 @@
 {
     "Subject": true,
-    "Teacher": true
+    "Teacher": true,
+    "Student": true
 }
