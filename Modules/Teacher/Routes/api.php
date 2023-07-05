@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Teacher\Http\Controllers\TeacherApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,8 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/teacher', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('teacher')->group(function () {
+    Route::post('add', [TeacherApiController::class, 'store']);
 });
