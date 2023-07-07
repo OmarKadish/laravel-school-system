@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Teacher\Entities\Teacher;
 use Modules\Teacher\Http\Requests\AddTeacherRequest;
+use Modules\Teacher\Http\Requests\EditTeacherRequest;
 
 class TeacherApiController extends Controller
 {
@@ -70,9 +71,30 @@ class TeacherApiController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(EditTeacherRequest $request)
     {
-        //
+        $teacher = Teacher::find($request->id);
+        if ($teacher){
+            $teacher->first_name = $request->first_name;
+            $teacher->last_name = $request->last_name;
+            $teacher->email = $request->email;
+            $teacher->subject_id = $request->subject_id;
+            $teacher->phone_number = $request->phone_number;
+            $teacher->birth_date = $request->birth_date;
+            $teacher->address = $request->address;
+            $teacher->save();
+
+            return response([
+                'message' => 'Updated successfully.',
+                'data' => $teacher,
+            ]);
+        }
+
+        return response([
+            'message' => 'Update failed. Please try again',
+        ]);
+
+
     }
 
     /**
