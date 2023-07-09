@@ -2,7 +2,6 @@
 
 namespace Modules\Teacher\Http\Controllers;
 
-use http\Env\Response;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -16,9 +15,9 @@ class TeacherApiController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function getAll()
     {
-        return view('teacher::index');
+        return response(Teacher::all(), 200);
     }
 
     /**
@@ -38,11 +37,10 @@ class TeacherApiController extends Controller
             'birth_date' => $request->get('birth_date'),
         ]);
 
-
         return response([
             'message' => 'Added successfully.',
             'data' => $teacher,
-        ]);
+        ], 201);
     }
 
     /**
@@ -52,17 +50,15 @@ class TeacherApiController extends Controller
      */
     public function show($id)
     {
-        return view('teacher::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('teacher::edit');
+        $teacher = Teacher::find($id);
+        if($teacher){
+            return response([
+                'data' => $teacher,
+            ], 200);
+        }
+        return response([
+          'message' => 'Not found.',
+        ], 404);
     }
 
     /**
@@ -87,14 +83,12 @@ class TeacherApiController extends Controller
             return response([
                 'message' => 'Updated successfully.',
                 'data' => $teacher,
-            ]);
+            ], 200);
         }
 
         return response([
             'message' => 'Update failed. Please try again',
-        ]);
-
-
+        ], 400);
     }
 
     /**
@@ -104,6 +98,14 @@ class TeacherApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(Teacher::destroy($id)){
+            return response([
+              'message' => 'Deleted successfully.',
+            ], 200);
+        } else{
+            return response([
+             'message' => 'Delete failed. Please try again',
+            ], 400);
+        }
     }
 }

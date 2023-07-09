@@ -21,4 +21,7 @@ Route::middleware('auth:api')->get('/teacher', function (Request $request) {
 Route::prefix('teacher')->group(function () {
     Route::post('add', [TeacherApiController::class, 'store']);
     Route::post('update', [TeacherApiController::class, 'update']);
+    Route::get('delete/{id}', [TeacherApiController::class, 'destroy']);
+    Route::get('get/{id}', [TeacherApiController::class, 'show']);
+    Route::get('getAll', [TeacherApiController::class, 'getAll']);
 });
