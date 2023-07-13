@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Subject\Http\Controllers\SubjectApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,9 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/subject', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('subject')->group(function () {
+    Route::post('add', [SubjectApiController::class, 'store']);
+
 });
