@@ -67,9 +67,12 @@ class SubjectApiController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Subject::find($request->id)->update($request->all());
+        return response([
+           'message' => 'Updated Successfully'
+        ], 201);
     }
 
     /**

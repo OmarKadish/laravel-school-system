@@ -20,5 +20,6 @@ Route::middleware('auth:api')->get('/subject', function (Request $request) {
 
 Route::prefix('subject')->group(function () {
     Route::post('add', [SubjectApiController::class, 'store']);
+    Route::post('update', [SubjectApiController::class, 'update']);
 
 });
