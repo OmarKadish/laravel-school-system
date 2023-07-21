@@ -14,18 +14,11 @@ class SubjectApiController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function getAll()
     {
-        return view('subject::index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('subject::create');
+        return response([
+            'data' => Subject::all(),
+        ], 200);
     }
 
     /**
@@ -48,23 +41,21 @@ class SubjectApiController extends Controller
      */
     public function show($id)
     {
-        return view('subject::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('subject::edit');
+        $subject = Subject::find($id);
+        if (!$subject) {
+            return response([
+                'message' => 'Subject not found',
+            ], 404);
+        } else {
+            return response([
+                'data' => $subject
+            ], 200);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      * @param Request $request
-     * @param int $id
      * @return Renderable
      */
     public function update(Request $request)
@@ -82,6 +73,9 @@ class SubjectApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Subject::find($id)->delete();
+        return response([
+          'message' => 'Deleted Successfully'
+        ], 201);
     }
 }

@@ -16,7 +16,7 @@ class AddSubjectRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'teacher_id' => 'required|unique:teachers,id'
+            'teacher_id' => 'required'
         ];
     }
 
