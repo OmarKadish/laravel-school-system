@@ -17,7 +17,6 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->integer('teacher_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

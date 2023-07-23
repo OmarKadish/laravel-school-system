@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('birth_date')->nullable();
             $table->text('address')->nullable();
             $table->integer('subject_id')->unsigned()->nullable();
+            $table->foreign('subject_id')->references('id')->on('subjects')->nullOnDelete();
             $table->timestamps();
         });
     }

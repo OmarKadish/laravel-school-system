@@ -4,7 +4,7 @@ namespace Modules\Subject\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditSubjectRequest extends FormRequest
+class AddEditSubjectRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,8 +15,7 @@ class EditSubjectRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'description' => 'string|max:255',
-            'teacher_id' => 'required|exist:teachers,id',
+            'description' => 'required|string|max:255',
         ];
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Subject\Entities\Subject;
-use Modules\Subject\Http\Requests\AddSubjectRequest;
+use Modules\Subject\Http\Requests\AddEditSubjectRequest;
 
 class SubjectApiController extends Controller
 {
@@ -26,7 +26,7 @@ class SubjectApiController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(AddSubjectRequest $request)
+    public function store(AddEditSubjectRequest $request)
     {
         Subject::create($request->all());
         return response([
@@ -58,12 +58,20 @@ class SubjectApiController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function update(Request $request)
+    public function update(AddEditSubjectRequest $request)
     {
-        Subject::find($request->id)->update($request->all());
-        return response([
-           'message' => 'Updated Successfully'
-        ], 201);
+        $subject = Subject::find($request->id);
+        if (!$subject) {
+            return response([
+               'message' => 'Subject not found',
+            ], 404);
+        } else {
+            $subject->update($request->all());
+            return response([
+                'message' => 'Updated Successfully',
+                'data' => $subject
+            ], 200);
+        }
     }
 
     /**

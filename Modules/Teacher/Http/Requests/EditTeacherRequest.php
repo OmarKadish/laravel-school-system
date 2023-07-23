@@ -16,7 +16,7 @@ class EditTeacherRequest extends FormRequest
         return [
             'first_name' => 'required|max:30',
             'last_name' => 'required|max:30',
-            'subject_id' => 'nullable|exist:subjects,id',
+            'subject_id' => 'nullable|exists:subjects,id',
             'email' => 'required|email|unique:teachers,email,'.$this->request->get('email').',email',
             'phone_number' => 'required|regex:/[0-9]{10}/',
             'birth_date' => 'nullable',
