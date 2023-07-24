@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Student\Http\Controllers\StudentApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/student', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('student')->group(function () {
+    Route::post('add', [StudentApiController::class, 'store']);
+    Route::post('update', [StudentApiController::class, 'update']);
+    Route::get('delete/{id}', [StudentApiController::class, 'destroy']);
+    Route::get('get/{id}', [StudentApiController::class, 'show']);
+    Route::get('getAll', [StudentApiController::class, 'getAll']);
 });
