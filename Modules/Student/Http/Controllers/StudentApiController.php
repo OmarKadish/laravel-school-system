@@ -6,7 +6,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Student\Entities\Student;
-use Modules\Student\Http\Requests\AddEditStudentRequest;
+use Modules\Student\Http\Requests\AddStudentRequest;
+use Modules\Student\Http\Requests\EditStudentRequest;
 use Modules\Subject\Http\Requests\AddEditSubjectRequest;
 
 class StudentApiController extends Controller
@@ -25,7 +26,7 @@ class StudentApiController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(AddEditStudentRequest $request)
+    public function store(AddStudentRequest $request)
     {
         $student = Student::create($request->all());
         return response([
@@ -45,24 +46,17 @@ class StudentApiController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('student::edit');
-    }
-
-    /**
      * Update the specified resource in storage.
      * @param Request $request
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(EditStudentRequest $request)
     {
-        //
+        Student::find($request->id)->update($request->all());
+        return response([
+            'message' => 'Student updated successfully'
+        ]);
     }
 
     /**
