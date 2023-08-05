@@ -42,7 +42,7 @@ class StudentApiController extends Controller
      */
     public function show($id)
     {
-        $student = Student::find($id);
+        $student = Student::with('subjects')->find($id);
         if($student){
             return response([
                 'data' => $student
@@ -85,5 +85,19 @@ class StudentApiController extends Controller
             ], 400);
         }
 
+    }
+
+    public function assignSubjects(Request $request)
+    {
+        $data = $request->validate([
+            'std_id' => 'required|exists:students,id',
+            'sub_ids' => 'required|array',
+            'sub_ids.*' => 'exists:subjects,id',
+        ]);
+        $student = Student::with('subjects')->find($request->std_id);
+        $student->subjects()->attach($request->sub_ids);
+        return response([
+            'message' => 'Added successfully.'
+        ], 200);
     }
 }
