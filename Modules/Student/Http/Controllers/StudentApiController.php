@@ -16,9 +16,9 @@ class StudentApiController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function getAll()
     {
-        return view('student::index');
+        return response(Student::all(), 200);
     }
 
     /**
@@ -42,7 +42,16 @@ class StudentApiController extends Controller
      */
     public function show($id)
     {
-        return view('student::show');
+        $student = Student::find($id);
+        if($student){
+            return response([
+                'data' => $student
+            ], 200);
+        } else {
+            return response([
+                'message' => 'Student not found'
+            ], 404);
+        }
     }
 
     /**
@@ -66,6 +75,15 @@ class StudentApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(Student::destroy($id)){
+            return response([
+                'message' => 'Deleted successfully',
+            ], 200);
+        } else {
+            return response([
+                'message' => 'Delete failed, please try again',
+            ], 400);
+        }
+
     }
 }
