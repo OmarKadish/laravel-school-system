@@ -100,4 +100,18 @@ class StudentApiController extends Controller
             'message' => 'Added successfully.'
         ], 200);
     }
+
+    public function reAssignSubjects(Request $request)
+    {
+        $data = $request->validate([
+            'std_id' => 'required|exists:students,id',
+            'sub_ids' => 'required|array',
+            'sub_ids.*' => 'exists:subjects,id',
+        ]);
+        $student = Student::with('subjects')->find($request->std_id);
+        $student->subjects()->sync($request->sub_ids);
+        return response([
+            'message' => 'Updated successfully.'
+        ], 200);
+    }
 }

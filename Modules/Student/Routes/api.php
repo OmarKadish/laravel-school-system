@@ -25,4 +25,5 @@ Route::prefix('student')->group(function () {
     Route::get('get/{id}', [StudentApiController::class, 'show']);
     Route::get('getAll', [StudentApiController::class, 'getAll']);
     Route::post('assign', [StudentApiController::class, 'assignSubjects']);
+    Route::post('reassign', [StudentApiController::class, 'reAssignSubjects']);
 });
